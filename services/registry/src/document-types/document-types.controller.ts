@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query } from '@nestjs/common';
 import { DocumentTypesService } from './document-types.service';
 import { CreateDocumentTypeDto } from './dto/create-document-type.dto';
 import { CreateFieldSchemaDto } from './dto/create-field-schema.dto';
@@ -41,5 +41,19 @@ export class DocumentTypesController {
   @Delete('fields/:fieldId')
   deleteField(@Param('fieldId') fieldId: string) {
     return this.service.deleteField(fieldId);
+  }
+
+  @Get(':id/prompt-preview')
+  promptPreview(@Param('id') id: string) {
+    return this.service.getPromptPreview(id);
+  }
+
+  @Patch(':id/prompt-override')
+  @HttpCode(204)
+  async updatePromptOverride(
+    @Param('id') id: string,
+    @Body() body: { promptOverride: string | null },
+  ) {
+    await this.service.updatePromptOverride(id, body.promptOverride ?? null);
   }
 }

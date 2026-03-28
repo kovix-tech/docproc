@@ -5,12 +5,14 @@ import { FieldSchema } from '../database/models/field-schema.model';
 import { CreateDocumentTypeDto } from './dto/create-document-type.dto';
 import { CreateFieldSchemaDto } from './dto/create-field-schema.dto';
 import { ReorderFieldsDto } from './dto/reorder-fields.dto';
+import { PromptBuilderService } from '../prompt/prompt-builder.service';
 
 @Injectable()
 export class DocumentTypesService {
   constructor(
     @InjectModel(DocumentType) private readonly dtModel: typeof DocumentType,
     @InjectModel(FieldSchema) private readonly fieldModel: typeof FieldSchema,
+    private readonly promptBuilder: PromptBuilderService,
   ) {}
 
   async create(dto: CreateDocumentTypeDto): Promise<DocumentType> {
@@ -56,5 +58,21 @@ export class DocumentTypesService {
         this.fieldModel.update({ order: index }, { where: { id, documentTypeId } }),
       ),
     );
+  }
+
+  async getPromptPreview(id: string): Promise<{ prompt: string; hasOverride: boolean }> {
+    const docType = await this.dtModel.findByPk(id, {
+      include: [{ model: FieldSchema, order: [['order', 'ASC']] }],
+    });
+    if (!docType) throw new NotFoundException(`DocumentType ${id} not found`);
+    const hasOverride = !!docType.promptOverride;
+    const prompt = this.promptBuilder.buildOrOverride(docType.fields ?? [], docType.promptOverride);
+    return { prompt, hasOverride };
+  }
+
+  async updatePromptOverride(id: string, promptOverride: string | null): Promise<void> {
+    const docType = await this.dtModel.findByPk(id);
+    if (!docType) throw new NotFoundException(`DocumentType ${id} not found`);
+    await docType.update({ promptOverride });
   }
 }
