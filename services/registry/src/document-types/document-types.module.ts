@@ -4,12 +4,12 @@ import { DocumentType } from '../database/models/document-type.model';
 import { FieldSchema } from '../database/models/field-schema.model';
 import { DocumentTypesController } from './document-types.controller';
 import { DocumentTypesService } from './document-types.service';
-import { PromptBuilderService } from '../prompt/prompt-builder.service';
+import { PromptModule } from '../prompt/prompt.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([DocumentType, FieldSchema])],
+  imports: [SequelizeModule.forFeature([DocumentType, FieldSchema]), PromptModule],
   controllers: [DocumentTypesController],
-  providers: [DocumentTypesService, PromptBuilderService],
+  providers: [DocumentTypesService],
   exports: [DocumentTypesService],
 })
 export class DocumentTypesModule {}

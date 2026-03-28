@@ -62,7 +62,8 @@ export class DocumentTypesService {
 
   async getPromptPreview(id: string): Promise<{ prompt: string; hasOverride: boolean }> {
     const docType = await this.dtModel.findByPk(id, {
-      include: [{ model: FieldSchema, order: [['order', 'ASC']] }],
+      include: [FieldSchema],
+      order: [[FieldSchema, 'order', 'ASC']],
     });
     if (!docType) throw new NotFoundException(`DocumentType ${id} not found`);
     const hasOverride = !!docType.promptOverride;
