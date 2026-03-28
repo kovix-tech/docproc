@@ -6,7 +6,7 @@ import { BasicAuthMiddleware } from './basic-auth.middleware'
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', '..', 'admin', 'out'),
+      rootPath: join(__dirname, '..', '..', 'admin', 'out'),
       serveRoot: '/admin',
       exclude: ['/tenants(.*)', '/document-types(.*)', '/internal(.*)'],
     }),

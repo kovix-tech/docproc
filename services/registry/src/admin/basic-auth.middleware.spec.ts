@@ -57,4 +57,23 @@ describe('BasicAuthMiddleware', () => {
     middleware.use(req, res, next)
     expect(next).toHaveBeenCalled()
   })
+
+  it('returns 401 when Authorization header has non-Basic scheme', () => {
+    const req = { headers: { authorization: 'Bearer sometoken' } } as any
+    const res = makeRes()
+    const next = jest.fn()
+    middleware.use(req, res, next)
+    expect(res.status).toHaveBeenCalledWith(401)
+    expect(next).not.toHaveBeenCalled()
+  })
+
+  it('returns 401 when credentials contain no colon', () => {
+    const token = Buffer.from('nocolon').toString('base64')
+    const req = { headers: { authorization: `Basic ${token}` } } as any
+    const res = makeRes()
+    const next = jest.fn()
+    middleware.use(req, res, next)
+    expect(res.status).toHaveBeenCalledWith(401)
+    expect(next).not.toHaveBeenCalled()
+  })
 })
