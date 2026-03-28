@@ -7,7 +7,9 @@
     "dev": "nest start --watch",
     "start": "node dist/main",
     "test": "jest",
-    "test:e2e": "jest --config jest-e2e.json"
+    "test:e2e": "jest --config jest-e2e.json",
+    "build:review": "cd review && pnpm build",
+    "build:all": "pnpm build:review && pnpm build"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.52.0",
@@ -17,6 +19,7 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/sequelize": "^11.0.0",
+    "@nestjs/serve-static": "^5.0.4",
     "axios": "^1.7.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",

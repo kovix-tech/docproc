@@ -22,6 +22,12 @@ export class Document extends Model {
   @Column({ type: DataType.TEXT, allowNull: true })
   declare fileUrl: string | null;
 
+  @Column({ type: DataType.TEXT, allowNull: true })
+  declare filePath: string | null;
+
+  @Column({ type: DataType.STRING, allowNull: true })
+  declare reviewTokenJti: string | null;
+
   @Column({ type: DataType.STRING, allowNull: true })
   declare aiModelUsed: string | null;
 

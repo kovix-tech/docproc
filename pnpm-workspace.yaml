@@ -1,4 +1,5 @@
 packages:
   - "services/*"
   - "services/registry/admin"
+  - "services/core/review"
   - "packages/*"
