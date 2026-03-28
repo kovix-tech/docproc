@@ -4,6 +4,7 @@ import { Document } from '../database/models/document.model';
 import { ExtractionField } from '../database/models/extraction-field.model';
 import { ExtractorService } from '../extractor/extractor.service';
 import { RegistryClient } from '../registry/registry.client';
+import { StorageService } from '../storage/storage.service';
 import { PatchFieldsDto } from './dto/patch-fields.dto';
 
 @Injectable()
@@ -13,6 +14,7 @@ export class DocumentsService {
     @InjectModel(ExtractionField) private readonly fieldModel: typeof ExtractionField,
     private readonly extractor: ExtractorService,
     private readonly registry: RegistryClient,
+    private readonly storage: StorageService,
   ) {}
 
   async create(tenantId: string, documentTypeId: string, fileBuffer: Buffer, mimeType: string): Promise<Document> {
@@ -21,6 +23,10 @@ export class DocumentsService {
       documentTypeId,
       status: 'processing',
     });
+
+    const filePath = await this.storage.save(doc.id, fileBuffer, mimeType);
+    const fileUrl = this.storage.getUrl(filePath);
+    await doc.update({ filePath, fileUrl });
 
     // Process in background — respond quickly with the document ID
     this.processDocument(doc.id, documentTypeId, fileBuffer, mimeType as any).catch((e) => {
@@ -88,7 +94,7 @@ export class DocumentsService {
   }
 
   async patchFields(id: string, tenantId: string, dto: PatchFieldsDto): Promise<Document> {
-    await this.findById(id, tenantId); // Verify exists + belongs to tenant
+    await this.findById(id, tenantId);
     await Promise.all(
       Object.entries(dto.fields).map(([key, value]) =>
         this.fieldModel.update({ value, corrected: true }, { where: { documentId: id, key } }),
