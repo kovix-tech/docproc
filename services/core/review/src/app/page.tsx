@@ -75,7 +75,9 @@ export default function ReviewPage() {
     setSubmitting(true)
     try {
       const editedFields = fields.reduce<Record<string, string>>((acc, f) => {
-        acc[f.key] = f.value ?? ''
+        if (f.value !== null) {
+          acc[f.key] = f.value
+        }
         return acc
       }, {})
       await patchFields(docIdRef.current, tokenRef.current, editedFields)

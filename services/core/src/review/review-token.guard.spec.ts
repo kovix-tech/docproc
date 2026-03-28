@@ -17,6 +17,7 @@ describe('ReviewTokenGuard', () => {
   let mockDocModel: { findByPk: jest.Mock };
 
   beforeEach(() => {
+    process.env.REVIEW_JWT_SECRET = 'test-secret';
     const jwtService = new JwtService({ secret: 'test-secret', signOptions: { expiresIn: '15m' } });
     jwtReviewService = new JwtReviewService(jwtService);
     mockDocModel = { findByPk: jest.fn() };

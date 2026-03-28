@@ -6,6 +6,7 @@ describe('JwtReviewService', () => {
   let jwtService: JwtService;
 
   beforeEach(() => {
+    process.env.REVIEW_JWT_SECRET = 'test-secret';
     jwtService = new JwtService({ secret: 'test-secret', signOptions: { expiresIn: '15m' } });
     service = new JwtReviewService(jwtService);
   });

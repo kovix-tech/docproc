@@ -12,7 +12,11 @@ export interface ReviewTokenPayload {
 
 @Injectable()
 export class JwtReviewService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(private readonly jwtService: JwtService) {
+    if (!process.env.REVIEW_JWT_SECRET) {
+      throw new Error('REVIEW_JWT_SECRET env var is required');
+    }
+  }
 
   sign(documentId: string, tenantId: string): { token: string; jti: string; expiresAt: Date } {
     const jti = uuidv4();

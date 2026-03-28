@@ -56,7 +56,6 @@ export class ReviewController {
   @UseGuards(ReviewTokenGuard)
   @Patch(':id/review-fields')
   async patchReviewFields(
-    @Req() req: Request,
     @Param('id') id: string,
     @Body() dto: PatchFieldsDto,
   ) {
