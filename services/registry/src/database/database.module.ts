@@ -11,7 +11,7 @@ import { FieldSchema } from './models/field-schema.model';
       uri: process.env.DATABASE_URL,
       models: [Tenant, DocumentType, FieldSchema],
       autoLoadModels: true,
-      synchronize: true, // Solo para dev; en prod usar migraciones
+      synchronize: process.env.NODE_ENV !== 'production',
       logging: false,
     }),
   ],
