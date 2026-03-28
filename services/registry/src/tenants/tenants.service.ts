@@ -20,11 +20,11 @@ export class TenantsService {
   }
 
   async findAll(): Promise<Tenant[]> {
-    return this.tenantModel.findAll();
+    return this.tenantModel.findAll({ attributes: { exclude: ['apiKeyHash'] } });
   }
 
   async findById(id: string): Promise<Tenant> {
-    const tenant = await this.tenantModel.findByPk(id);
+    const tenant = await this.tenantModel.findByPk(id, { attributes: { exclude: ['apiKeyHash'] } });
     if (!tenant) throw new NotFoundException(`Tenant ${id} not found`);
     return tenant;
   }
