@@ -22,6 +22,18 @@ export class RegistryClient {
     return res.data ?? null;
   }
 
+  async resolveTenantById(tenantId: string): Promise<{ id: string; name: string; webhookUrl: string | null } | null> {
+    try {
+      const res = await axios.get(
+        `${this.baseUrl}/internal/tenant/${encodeURIComponent(tenantId)}`,
+        { headers: this.headers },
+      );
+      return res.data ?? null;
+    } catch {
+      return null;
+    }
+  }
+
   async resolveSchema(documentTypeId: string): Promise<ResolvedSchema> {
     const res = await axios.get(`${this.baseUrl}/internal/schema/${documentTypeId}`, { headers: this.headers });
     return res.data;

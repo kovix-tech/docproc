@@ -46,4 +46,10 @@ export class InternalController {
     if (!tenant) return null;
     return { id: tenant.id, name: tenant.name, webhookUrl: tenant.webhookUrl };
   }
+
+  @Get('tenant/:id')
+  async resolveById(@Param('id') id: string) {
+    const tenant = await this.tenantsService.findById(id);
+    return { id: tenant.id, name: tenant.name, webhookUrl: tenant.webhookUrl };
+  }
 }
