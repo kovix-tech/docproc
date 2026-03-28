@@ -8,9 +8,10 @@ import { ExtractorService } from '../extractor/extractor.service';
 import { RegistryClient } from '../registry/registry.client';
 import { ApiKeyGuard } from '../auth/api-key.guard';
 import { StorageModule } from '../storage/storage.module';
+import { WebhookModule } from '../webhook/webhook.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Document, ExtractionField]), StorageModule],
+  imports: [SequelizeModule.forFeature([Document, ExtractionField]), StorageModule, WebhookModule],
   controllers: [DocumentsController],
   providers: [DocumentsService, ExtractorService, RegistryClient, ApiKeyGuard],
 })
