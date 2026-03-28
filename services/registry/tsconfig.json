@@ -1,0 +1,10 @@
+{
+  "extends": "@docproc/typescript-config/nestjs",
+  "compilerOptions": {
+    "paths": {
+      "@docproc/api-contracts": ["../../packages/api-contracts/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "test"]
+}
