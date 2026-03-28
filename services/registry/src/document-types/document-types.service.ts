@@ -20,13 +20,15 @@ export class DocumentTypesService {
   async findByTenant(tenantId: string): Promise<DocumentType[]> {
     return this.dtModel.findAll({
       where: { tenantId },
-      include: [{ model: FieldSchema, order: [['order', 'ASC']] }],
+      include: [FieldSchema],
+      order: [[FieldSchema, 'order', 'ASC']],
     });
   }
 
   async findById(id: string): Promise<DocumentType> {
     const dt = await this.dtModel.findByPk(id, {
-      include: [{ model: FieldSchema, order: [['order', 'ASC']] }],
+      include: [FieldSchema],
+      order: [[FieldSchema, 'order', 'ASC']],
     });
     if (!dt) throw new NotFoundException(`DocumentType ${id} not found`);
     return dt;

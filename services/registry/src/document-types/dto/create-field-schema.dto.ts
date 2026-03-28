@@ -1,4 +1,4 @@
-import { IsArray, IsBoolean, IsEnum, IsInt, IsOptional, IsString, Min, ValidateIf } from 'class-validator';
+import { ArrayMinSize, IsArray, IsBoolean, IsEnum, IsInt, IsOptional, IsString, Min, ValidateIf } from 'class-validator';
 
 export class CreateFieldSchemaDto {
   @IsString()
@@ -17,9 +17,11 @@ export class CreateFieldSchemaDto {
   @IsBoolean()
   required!: boolean;
 
+  @ValidateIf((o) => o.type === 'enum')
+  @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  @ValidateIf((o) => o.type === 'enum')
+  @ArrayMinSize(1)
   enumOptions?: string[];
 
   @IsInt()
