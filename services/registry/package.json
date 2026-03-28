@@ -7,7 +7,9 @@
     "dev": "nest start --watch",
     "start": "node dist/main",
     "test": "jest",
-    "test:e2e": "jest --config jest-e2e.json"
+    "test:e2e": "jest --config jest-e2e.json",
+    "build:admin": "cd admin && pnpm build",
+    "build:all": "pnpm build:admin && pnpm build"
   },
   "dependencies": {
     "@docproc/api-contracts": "workspace:*",
