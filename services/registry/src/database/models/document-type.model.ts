@@ -2,6 +2,7 @@ import {
   BelongsTo, Column, DataType, Default,
   ForeignKey, HasMany, Model, PrimaryKey, Table,
 } from 'sequelize-typescript';
+import type { AIModel } from '@docproc/api-contracts';
 import { Tenant } from './tenant.model';
 import { FieldSchema } from './field-schema.model';
 
@@ -29,7 +30,7 @@ export class DocumentType extends Model {
   declare promptOverride: string | null;
 
   @Column({ type: DataType.STRING, allowNull: false, defaultValue: 'claude-sonnet-4-20250514' })
-  declare model: string;
+  declare model: AIModel;
 
   @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: true })
   declare active: boolean;

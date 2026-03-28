@@ -2,6 +2,7 @@ import {
   BelongsTo, Column, DataType, Default,
   ForeignKey, Model, PrimaryKey, Table,
 } from 'sequelize-typescript';
+import type { FieldType } from '@docproc/api-contracts';
 import { DocumentType } from './document-type.model';
 
 @Table({ tableName: 'field_schemas', timestamps: true })
@@ -25,7 +26,7 @@ export class FieldSchema extends Model {
   declare label: string;
 
   @Column({ type: DataType.ENUM('text', 'number', 'date', 'enum', 'boolean'), allowNull: false })
-  declare type: string;
+  declare type: FieldType;
 
   @Column({ type: DataType.TEXT, allowNull: false, defaultValue: '' })
   declare description: string;
