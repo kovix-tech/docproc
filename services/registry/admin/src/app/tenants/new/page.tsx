@@ -74,7 +74,7 @@ export default function NewTenantPage() {
       </div>
 
       <Dialog open={!!apiKey}>
-        <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+        <DialogContent onInteractOutside={(e) => e.preventDefault()} onEscapeKeyDown={(e) => e.preventDefault()}>
           <DialogHeader>
             <DialogTitle>Tenant creado — API Key</DialogTitle>
             <DialogDescription>
