@@ -7,7 +7,9 @@
     "dev": "nest start --watch",
     "start": "node dist/main",
     "test": "jest",
-    "test:e2e": "jest --config jest-e2e.json"
+    "test:e2e": "jest --config jest-e2e.json",
+    "build:review": "cd review && pnpm build",
+    "build:all": "pnpm build:review && pnpm build"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.52.0",
