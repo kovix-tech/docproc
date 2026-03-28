@@ -1,0 +1,9 @@
+{
+  "name": "@docproc/typescript-config",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    "./base": "./base.json",
+    "./nestjs": "./nestjs.json"
+  }
+}
